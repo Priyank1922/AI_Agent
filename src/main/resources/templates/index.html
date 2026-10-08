@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${appTitle}">Nexus AI • Autonomous Multi-Tool Agent</title>
+    
+    <!-- Meta SEO & Description -->
+    <meta name="description" content="Next-Generation Autonomous Multi-Tool AI Agent with ChatGPT-style conversation, live website cloner & builder, weather reports, currency exchange, and scientific calculation.">
+    <meta name="author" content="Priyank">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- ====================================================================
+         TOP HEADER BAR
+         ==================================================================== -->
+    <header class="app-header">
+        <div class="brand" onclick="NexusApp.switchTab('chat')">
+            <div class="brand-icon">
+                <i class="fa-solid fa-atom"></i>
+            </div>
+            <div class="brand-text">
+                <h1>Nexus AI <span class="brand-badge">Agent 2.0</span></h1>
+                <p>Autonomous LLM & Multi-Tool Studio</p>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs-wrapper" aria-label="Main Navigation">
+            <button class="nav-tab-btn active" data-tab="chat" id="tabBtnChat">
+                <i class="fa-regular fa-comments"></i>
+                <span>Omni Chat</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="builder" id="tabBtnBuilder">
+                <i class="fa-solid fa-code-fork"></i>
+                <span>App Cloner</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="weather" id="tabBtnWeather">
+                <i class="fa-solid fa-cloud-sun"></i>
+                <span>Weather</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="currency" id="tabBtnCurrency">
+                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                <span>Currency</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="calc" id="tabBtnCalc">
+                <i class="fa-solid fa-calculator"></i>
+                <span>Calculator</span>
+            </button>
+        </nav>
+
+        <!-- Right Header Actions -->
+        <div class="header-actions">
+            <div class="status-pill" title="Connected to AI LLM Backend">
+                <span class="status-dot"></span>
+                <span>Active Agent</span>
+            </div>
+            <button class="btn-icon" id="btnOpenPromptsModal" title="Starter Prompts & Examples">
+                <i class="fa-regular fa-lightbulb"></i>
+            </button>
+            <button class="btn-icon" id="btnOpenStatusModal" title="Agent Architecture & Status">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ====================================================================
+         MAIN VIEW CONTAINER
+         ==================================================================== -->
+    <main class="main-view-container">
+
+        <!-- ================================================================
+             TAB 1: OMNI AI CHAT
+             ================================================================ -->
+        <section class="tab-pane active" id="tab-chat">
+            <div class="chat-module">
+                
+                <!-- Chat Left Sidebar -->
+                <aside class="chat-sidebar">
+                    <div class="chat-sidebar-header">
+                        <button class="btn-new-chat" id="btnNewChat">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>New Conversation</span>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-section-title">Integrated AI Tools</div>
+                    <div class="tools-pill-grid">
+                        <div class="tool-badge-item prompt-chip-trigger" data-prompt="What is the weather in Tokyo right now?">
+                            <div class="tool-left">
+                                <span>🌦️ WeatherTool</span>
+                            </div>
+                            <span class="tool-indicator">Ready</span>
+                        </div>
+                        <div class="tool-badge-item prompt-chip-trigger" data-prompt="Convert 1000 USD to EUR and INR with current rate">
+                            <div class="tool-left">
+                                <span>💱 CurrencyFX</span>
+                            </div>
+                            <span class="tool-indicator">Ready</span>
+                        </div>
+                        <div class="tool-badge-item prompt-chip-trigger" data-prompt="Calculate compound interest on $10,000 at 8% annual for 5 years">
+                            <div class="tool-left">
+                                <span>🧮 MathEngine</span>
+                            </div>
+                            <span class="tool-indicator">Ready</span>
+                        </div>
+                        <div class="tool-badge-item" onclick="NexusApp.switchTab('builder')">
+                            <div class="tool-left">
+                                <span>🌐 WebBuilder</span>
+                            </div>
+                            <span class="tool-indicator" style="background:var(--primary-light); color:var(--primary);">Studio</span>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section-title" style="margin-top: 10px;">Suggested Queries</div>
+                    <div class="suggested-prompts-list">
+                        <div class="prompt-card-chip prompt-chip-trigger" data-prompt="Build a modern dark-mode Spotify web player clone with playlist and audio controls">
+                            <strong>App Cloner</strong>
+                            <span>Spotify Web Player Clone</span>
+                        </div>
+                        <div class="prompt-card-chip prompt-chip-trigger" data-prompt="What's the weather in Paris, France and give me packing advice?">
+                            <strong>Weather</strong>
+                            <span>Paris Weather & Advisory</span>
+                        </div>
+                        <div class="prompt-card-chip prompt-chip-trigger" data-prompt="How much is 250 British Pounds (GBP) in US Dollars (USD)?">
+                            <strong>FX Rates</strong>
+                            <span>GBP to USD Conversion</span>
+                        </div>
+                        <div class="prompt-card-chip prompt-chip-trigger" data-prompt="Calculate 2 raised to the power of 16 and explain the binary significance">
+                            <strong>Math Reasoning</strong>
+                            <span>Exponential & Binary Power</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-secondary" id="btnClearSession" style="width: 100%; justify-content: center; font-size: 12px; margin-top: auto;">
+                        <i class="fa-regular fa-trash-can"></i> Clear History
+                    </button>
+                </aside>
+
+                <!-- Chat Main Area -->
+                <div class="chat-main-area">
+                    <div class="chat-messages-container" id="chatMessages">
+                        
+                        <!-- Welcome Hero -->
+                        <div class="chat-welcome-hero" id="chatWelcomeHero">
+                            <div class="hero-avatar-ring">
+                                <i class="fa-solid fa-atom"></i>
+                            </div>
+                            <h2>How can Nexus AI assist you today?</h2>
+                            <p>An intelligent agent equipped with LLM reasoning, live weather querying, real-time currency exchange rates, mathematics execution, and full-stack website generation.</p>
+
+                            <div class="hero-feature-grid">
+                                <div class="feature-box prompt-chip-trigger" data-prompt="Create a complete Netflix clone landing page with hero banner and movie cards carousel">
+                                    <div class="feature-box-icon">🎬</div>
+                                    <div class="feature-box-content">
+                                        <h4>Clone Netflix UI</h4>
+                                        <p>Generates HTML, modern CSS, and interactive JS</p>
+                                    </div>
+                                </div>
+                                <div class="feature-box prompt-chip-trigger" data-prompt="What is the current temperature and atmospheric conditions in New York?">
+                                    <div class="feature-box-icon">🗽</div>
+                                    <div class="feature-box-content">
+                                        <h4>New York Weather</h4>
+                                        <p>Live WeatherAPI meteorological data</p>
+                                    </div>
+                                </div>
+                                <div class="feature-box prompt-chip-trigger" data-prompt="Convert 500 Euros to US Dollars and Indian Rupees">
+                                    <div class="feature-box-icon">💶</div>
+                                    <div class="feature-box-content">
+                                        <h4>Convert EUR to USD & INR</h4>
+                                        <p>Frankfurter real-time interbank rates</p>
+                                    </div>
+                                </div>
+                                <div class="feature-box prompt-chip-trigger" data-prompt="Calculate 4850 divided by 12.5 and multiply by 3.14">
+                                    <div class="feature-box-icon">⚡</div>
+                                    <div class="feature-box-content">
+                                        <h4>Complex Arithmetic</h4>
+                                        <p>High-precision calculation with step explanation</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Chat Bottom Input Bar -->
+                    <div class="chat-input-wrapper">
+                        <form class="chat-input-box" id="chatForm">
+                            <textarea class="chat-textarea" id="chatInput" placeholder="Message Nexus AI Agent or ask to build a website, check weather, convert currency..." rows="1" required></textarea>
+                            <div class="chat-actions-group">
+                                <button type="submit" class="btn-send-chat" id="btnSendChat" disabled title="Send Message">
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                </button>
+                            </div>
+                        </form>
+                        <div class="chat-disclaimer">
+                            Nexus AI Agent combines Spring AI, OpenRouter LLM, and autonomous tool calling.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 2: AI WEBSITE BUILDER & APP CLONER STUDIO
+             ================================================================ -->
+        <section class="tab-pane" id="tab-builder">
+            <div class="builder-module">
+                
+                <!-- Builder Config Sidebar -->
+                <aside class="builder-sidebar">
+                    <div class="builder-header-badge">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Autonomous Cloner
+                    </div>
+
+                    <div class="builder-title-group">
+                        <h3>Website & App Maker</h3>
+                        <p>Provide specifications or name an app to clone. The agent autonomously creates HTML, CSS, and JS files in the project workspace.</p>
+                    </div>
+
+                    <form id="builderForm" style="display:flex; flex-direction:column; gap:16px;">
+                        <div class="form-group">
+                            <label class="form-label" for="builderPrompt">
+                                <span>Website Specification</span>
+                                <span style="font-weight:400; color:var(--text-muted);">Required</span>
+                            </label>
+                            <textarea class="builder-textarea" id="builderPrompt" placeholder="e.g. Build a sleek Spotify Web Player clone with dark aesthetic, music player controls, playlist cards, and responsive sidebar." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Quick App Presets</label>
+                            <div class="presets-grid">
+                                <button type="button" class="preset-chip" data-prompt="Build a modern dark-mode Spotify web player clone with sidebar navigation, music player controls, and popular album cards.">
+                                    <span class="preset-chip-icon">🎧</span>
+                                    <span>Spotify Player Clone</span>
+                                </button>
+                                <button type="button" class="preset-chip" data-prompt="Create a high-converting SaaS startup landing page with hero section, feature grid, pricing table, and testimonials.">
+                                    <span class="preset-chip-icon">🚀</span>
+                                    <span>SaaS Startup Landing</span>
+                                </button>
+                                <button type="button" class="preset-chip" data-prompt="Build a luxury Artisan Coffee Shop website with hero banner, interactive menu cards, customer reviews, and contact footer.">
+                                    <span class="preset-chip-icon">☕</span>
+                                    <span>Coffee Shop Showcase</span>
+                                </button>
+                                <button type="button" class="preset-chip" data-prompt="Create a modern cryptocurrency dashboard with live price ticker cards, portfolio balance chart mockup, and transaction table.">
+                                    <span class="preset-chip-icon">📊</span>
+                                    <span>Crypto & Finance Hub</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-generate-site" id="btnGenerateSite">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Generate Website Clone</span>
+                        </button>
+                    </form>
+
+                    <!-- Build Terminal Logs -->
+                    <div class="generation-status-card" id="builderStatusCard" style="display:none;">
+                        <div class="status-card-header">
+                            <span><i class="fa-solid fa-terminal"></i> Build Terminal</span>
+                            <span style="color:#4ade80;">Live Execution</span>
+                        </div>
+                        <div class="status-logs-stream" id="statusLogsStream"></div>
+                    </div>
+
+                    <!-- Saved Projects List -->
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label class="form-label">
+                            <span>Saved Projects in Workspace</span>
+                            <i class="fa-solid fa-folder-tree" style="color:var(--primary);"></i>
+                        </label>
+                        <div class="saved-projects-list" id="savedProjectsList"></div>
+                    </div>
+                </aside>
+
+                <!-- Builder Main Canvas / Inspector Area -->
+                <div class="builder-workspace">
+                    
+                    <!-- Top Workspace Bar -->
+                    <div class="workspace-top-bar">
+                        <div class="view-mode-tabs">
+                            <button class="mode-btn active" data-mode="preview">
+                                <i class="fa-solid fa-display"></i>
+                                <span>Live Preview</span>
+                            </button>
+                            <button class="mode-btn" data-mode="code">
+                                <i class="fa-solid fa-code"></i>
+                                <span>Source Inspector</span>
+                            </button>
+                        </div>
+
+                        <!-- Device Viewport Controls -->
+                        <div class="device-viewport-controls">
+                            <button class="device-btn active" data-device="desktop" title="Desktop View (100%)">
+                                <i class="fa-solid fa-desktop"></i>
+                            </button>
+                            <button class="device-btn" data-device="tablet" title="Tablet View (768px)">
+                                <i class="fa-solid fa-tablet-screen-button"></i>
+                            </button>
+                            <button class="device-btn" data-device="mobile" title="Mobile View (390px)">
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                            </button>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="workspace-actions">
+                            <button class="btn-secondary" id="btnReloadPreview" title="Refresh Preview">
+                                <i class="fa-solid fa-arrow-rotate-right"></i>
+                                <span>Reload</span>
+                            </button>
+                            <button class="btn-secondary" id="btnOpenPreviewNew" title="Open in New Browser Tab">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                <span>Open Tab</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Live Preview Viewport -->
+                    <div class="workspace-canvas" id="previewModeContainer">
+                        <div class="device-frame-container desktop" id="deviceFrameContainer">
+                            <div class="device-browser-bar">
+                                <div class="browser-dots">
+                                    <span class="browser-dot red"></span>
+                                    <span class="browser-dot yellow"></span>
+                                    <span class="browser-dot green"></span>
+                                </div>
+                                <div class="browser-url-pill" id="browserUrlPill">
+                                    http://localhost:8080/sites/
+                                </div>
+                            </div>
+                            <iframe class="preview-iframe" id="previewIframe" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+                        </div>
+                    </div>
+
+                    <!-- Code Inspector Viewport -->
+                    <div class="workspace-canvas" id="codeInspectorContainer" style="display:none;">
+                        <div class="code-inspector-container">
+                            <div class="code-tabs-header">
+                                <div class="code-tabs-group">
+                                    <button class="code-tab-btn active" data-file="index.html">
+                                        <i class="fa-brands fa-html5" style="color:#e44d26;"></i> index.html
+                                    </button>
+                                    <button class="code-tab-btn" data-file="style.css">
+                                        <i class="fa-brands fa-css3-alt" style="color:#264de4;"></i> style.css
+                                    </button>
+                                    <button class="code-tab-btn" data-file="script.js">
+                                        <i class="fa-brands fa-js" style="color:#f7df1e;"></i> script.js
+                                    </button>
+                                </div>
+                                <button class="btn-secondary" id="btnCopyProjectCode" style="padding: 4px 10px; font-size: 11.5px;">
+                                    <i class="fa-regular fa-copy"></i> Copy Code
+                                </button>
+                            </div>
+                            <pre class="code-view-area" id="codeViewArea"><code>/* Select a generated project to inspect its source code */</code></pre>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 3: WEATHER INTELLIGENCE HUB
+             ================================================================ -->
+        <section class="tab-pane" id="tab-weather">
+            <div class="weather-module">
+                <div class="weather-container">
+                    
+                    <div class="module-header">
+                        <h2>Weather Intelligence Hub</h2>
+                        <p>Query real-time meteorological observations for any global city via integrated WeatherAPI.</p>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="weather-search-bar">
+                        <i class="fa-solid fa-magnifying-glass" style="color:var(--text-muted); font-size:16px;"></i>
+                        <input type="text" class="weather-input" id="weatherCityInput" placeholder="Enter city name (e.g. Tokyo, London, San Francisco, Mumbai)..." value="London">
+                        <button class="btn-secondary" id="btnSearchWeather" style="background:var(--primary); color:#ffffff; border:none;">
+                            <span>Search</span>
+                        </button>
+                    </div>
+
+                    <!-- Quick City Badges -->
+                    <div class="weather-quick-cities">
+                        <button class="city-chip weather-quick-city" data-city="London">🇬🇧 London</button>
+                        <button class="city-chip weather-quick-city" data-city="Tokyo">🇯🇵 Tokyo</button>
+                        <button class="city-chip weather-quick-city" data-city="New York">🇺🇸 New York</button>
+                        <button class="city-chip weather-quick-city" data-city="Paris">🇫🇷 Paris</button>
+                        <button class="city-chip weather-quick-city" data-city="Dubai">🇦🇪 Dubai</button>
+                        <button class="city-chip weather-quick-city" data-city="Mumbai">🇮🇳 Mumbai</button>
+                        <button class="city-chip weather-quick-city" data-city="Sydney">🇦🇺 Sydney</button>
+                    </div>
+
+                    <!-- Weather Main Hero Card -->
+                    <div class="weather-hero-card" id="weatherHeroCard">
+                        <div class="weather-card-top">
+                            <div class="weather-location">
+                                <h3 id="weatherCityName">London, United Kingdom</h3>
+                                <span id="weatherLocalTime">Local Time: 12:00 PM</span>
+                            </div>
+                            <button class="btn-secondary prompt-chip-trigger" id="btnAskWeatherAI" data-prompt="Analyze the current weather conditions for London and provide recommendations for outdoor activities.">
+                                <i class="fa-solid fa-robot"></i> Ask AI Analysis
+                            </button>
+                        </div>
+
+                        <div class="weather-temp-hero">
+                            <div class="temp-huge" id="weatherTempC">18°C</div>
+                            <div class="weather-condition-badge">
+                                <h4 id="weatherCondition">Partly Cloudy</h4>
+                                <span id="weatherFeelsLike">Feels like 17°C</span>
+                            </div>
+                        </div>
+
+                        <div class="weather-metrics-grid">
+                            <div class="metric-card">
+                                <span class="metric-card-label"><i class="fa-solid fa-droplet"></i> Humidity</span>
+                                <span class="metric-card-val" id="weatherHumidity">68%</span>
+                            </div>
+                            <div class="metric-card">
+                                <span class="metric-card-label"><i class="fa-solid fa-wind"></i> Wind Speed</span>
+                                <span class="metric-card-val" id="weatherWind">18 km/h</span>
+                            </div>
+                            <div class="metric-card">
+                                <span class="metric-card-label"><i class="fa-solid fa-sun"></i> UV Index</span>
+                                <span class="metric-card-val" id="weatherUV">3.0</span>
+                            </div>
+                            <div class="metric-card">
+                                <span class="metric-card-label"><i class="fa-solid fa-gauge-high"></i> Air Pressure</span>
+                                <span class="metric-card-val" id="weatherPressure">1016 hPa</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 4: CURRENCY EXCHANGE STUDIO
+             ================================================================ -->
+        <section class="tab-pane" id="tab-currency">
+            <div class="currency-module">
+                <div class="currency-container">
+                    
+                    <div class="module-header">
+                        <h2>Currency Exchange Studio</h2>
+                        <p>Real-time foreign exchange converter powered by Frankfurter API with high-precision rate calculation.</p>
+                    </div>
+
+                    <!-- Converter Card -->
+                    <div class="currency-converter-card">
+                        <div class="converter-row">
+                            
+                            <!-- Amount & From -->
+                            <div class="currency-field">
+                                <label class="form-label">You Send</label>
+                                <div class="currency-input-wrapper">
+                                    <input type="number" class="currency-input" id="currAmountInput" value="1000" min="0" step="any">
+                                    <select class="currency-select" id="currFromSelect">
+                                        <option value="USD" selected>USD ($)</option>
+                                        <option value="EUR">EUR (€)</option>
+                                        <option value="GBP">GBP (£)</option>
+                                        <option value="INR">INR (₹)</option>
+                                        <option value="JPY">JPY (¥)</option>
+                                        <option value="CAD">CAD (C$)</option>
+                                        <option value="AUD">AUD (A$)</option>
+                                        <option value="CHF">CHF (Fr)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Swap Button -->
+                            <button class="btn-swap-currency" id="btnSwapCurrency" title="Swap Currencies">
+                                <i class="fa-solid fa-right-left"></i>
+                            </button>
+
+                            <!-- Target Currency -->
+                            <div class="currency-field">
+                                <label class="form-label">Recipient Gets</label>
+                                <div class="currency-input-wrapper">
+                                    <div class="currency-input" style="display:flex; align-items:center; color:var(--primary);" id="currResultValue">
+                                        Calculating...
+                                    </div>
+                                    <select class="currency-select" id="currToSelect">
+                                        <option value="EUR" selected>EUR (€)</option>
+                                        <option value="USD">USD ($)</option>
+                                        <option value="GBP">GBP (£)</option>
+                                        <option value="INR">INR (₹)</option>
+                                        <option value="JPY">JPY (¥)</option>
+                                        <option value="CAD">CAD (C$)</option>
+                                        <option value="AUD">AUD (A$)</option>
+                                        <option value="CHF">CHF (Fr)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Result Banner -->
+                        <div class="rate-result-banner">
+                            <div class="rate-result-text">
+                                <span id="currResultSub">Fetching latest market rate...</span>
+                            </div>
+                            <button class="btn-secondary prompt-chip-trigger" id="btnAskCurrencyAI" data-prompt="Analyze the currency exchange trend between USD and EUR and provide a market summary.">
+                                <i class="fa-solid fa-robot"></i> FX Summary with AI
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Popular FX Pairs -->
+                    <div class="form-group">
+                        <label class="form-label">Popular FX Currency Pairs</label>
+                        <div class="popular-rates-grid">
+                            <div class="popular-rate-card" data-from="USD" data-to="EUR">
+                                <div class="rate-pair-title">
+                                    <span>🇺🇸 USD / 🇪🇺 EUR</span>
+                                    <i class="fa-solid fa-chart-line" style="color:var(--accent-emerald);"></i>
+                                </div>
+                                <div class="rate-pair-val">0.924 EUR</div>
+                            </div>
+                            <div class="popular-rate-card" data-from="USD" data-to="INR">
+                                <div class="rate-pair-title">
+                                    <span>🇺🇸 USD / 🇮🇳 INR</span>
+                                    <i class="fa-solid fa-chart-line" style="color:var(--accent-emerald);"></i>
+                                </div>
+                                <div class="rate-pair-val">83.50 INR</div>
+                            </div>
+                            <div class="popular-rate-card" data-from="GBP" data-to="USD">
+                                <div class="rate-pair-title">
+                                    <span>🇬🇧 GBP / 🇺🇸 USD</span>
+                                    <i class="fa-solid fa-chart-line" style="color:var(--accent-emerald);"></i>
+                                </div>
+                                <div class="rate-pair-val">1.272 USD</div>
+                            </div>
+                            <div class="popular-rate-card" data-from="USD" data-to="JPY">
+                                <div class="rate-pair-title">
+                                    <span>🇺🇸 USD / 🇯🇵 JPY</span>
+                                    <i class="fa-solid fa-chart-line" style="color:var(--accent-emerald);"></i>
+                                </div>
+                                <div class="rate-pair-val">155.20 JPY</div>
+                            </div>
+                            <div class="popular-rate-card" data-from="EUR" data-to="GBP">
+                                <div class="rate-pair-title">
+                                    <span>🇪🇺 EUR / 🇬🇧 GBP</span>
+                                    <i class="fa-solid fa-chart-line" style="color:var(--accent-emerald);"></i>
+                                </div>
+                                <div class="rate-pair-val">0.856 GBP</div>
+                            </div>
+                            <div class="popular-rate-card" data-from="USD" data-to="CAD">
+                                <div class="rate-pair-title">
+                                    <span>🇺🇸 USD / 🇨🇦 CAD</span>
+                                    <i class="fa-solid fa-chart-line" style="color:var(--accent-emerald);"></i>
+                                </div>
+                                <div class="rate-pair-val">1.365 CAD</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 5: CALCULATOR & MATH STUDIO
+             ================================================================ -->
+        <section class="tab-pane" id="tab-calc">
+            <div class="calc-module">
+                <div class="calc-container">
+                    
+                    <div class="module-header">
+                        <h2>Precision Math Studio</h2>
+                        <p>High-precision arithmetic and exponent calculator connected with the backend Spring AI Calculator Tool.</p>
+                    </div>
+
+                    <div class="calc-card">
+                        <div class="calc-display">
+                            <div class="calc-expression" id="calcExpression"></div>
+                            <div class="calc-current" id="calcCurrent">0</div>
+                        </div>
+
+                        <div class="calc-grid">
+                            <button class="calc-key action" data-action="clear">C</button>
+                            <button class="calc-key action" data-action="delete"><i class="fa-solid fa-delete-left"></i></button>
+                            <button class="calc-key op" data-action="operator" data-val="%">%</button>
+                            <button class="calc-key op" data-action="operator" data-val="÷">÷</button>
+
+                            <button class="calc-key" data-val="7">7</button>
+                            <button class="calc-key" data-val="8">8</button>
+                            <button class="calc-key" data-val="9">9</button>
+                            <button class="calc-key op" data-action="operator" data-val="×">×</button>
+
+                            <button class="calc-key" data-val="4">4</button>
+                            <button class="calc-key" data-val="5">5</button>
+                            <button class="calc-key" data-val="6">6</button>
+                            <button class="calc-key op" data-action="operator" data-val="-">-</button>
+
+                            <button class="calc-key" data-val="1">1</button>
+                            <button class="calc-key" data-val="2">2</button>
+                            <button class="calc-key" data-val="3">3</button>
+                            <button class="calc-key op" data-action="operator" data-val="+">+</button>
+
+                            <button class="calc-key" data-val="0">0</button>
+                            <button class="calc-key" data-val=".">.</button>
+                            <button class="calc-key equal" data-action="equal">=</button>
+                        </div>
+                    </div>
+
+                    <button class="btn-secondary prompt-chip-trigger" style="justify-content: center; padding: 12px;" data-prompt="Solve a step-by-step calculus problem: find the derivative of f(x) = 3x^3 + 5x^2 - 7x + 12">
+                        <i class="fa-solid fa-wand-magic-sparkles" style="color:var(--primary);"></i>
+                        <span>Solve Complex Math Problem with AI Agent</span>
+                    </button>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ====================================================================
+         MODALS
+         ==================================================================== -->
+    
+    <!-- System & Architecture Modal -->
+    <div class="modal-overlay" id="statusModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Nexus AI Agent Architecture</h3>
+                <button class="btn-icon btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:14px; font-size:13.5px; color:var(--text-secondary);">
+                <div style="padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-md); border:1px solid var(--border-light);">
+                    <strong style="color:var(--text-primary); display:block; margin-bottom:4px;">Core AI Model</strong>
+                    <span th:text="${modelName}">openrouter/free</span>
+                </div>
+                <div style="padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-md); border:1px solid var(--border-light);">
+                    <strong style="color:var(--text-primary); display:block; margin-bottom:4px;">Registered Tools</strong>
+                    <span>• WeatherTool (WeatherAPI)</span><br/>
+                    <span>• CurrencyExchangeTool (Frankfurter FX)</span><br/>
+                    <span>• CalculatorTool (Math Engine)</span><br/>
+                    <span>• WebsiteTools (Autonomous File System)</span>
+                </div>
+                <div style="padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-md); border:1px solid var(--border-light);">
+                    <strong style="color:var(--text-primary); display:block; margin-bottom:4px;">Frontend Framework</strong>
+                    <span>Spring Boot + Thymeleaf + Clean Vanilla CSS (White Classic Luxury Theme)</span>
+                </div>
+            </div>
+            <button class="btn-secondary btn-close-modal" style="margin-top:8px; justify-content:center;">Close</button>
+        </div>
+    </div>
+
+    <!-- Starter Prompts Modal -->
+    <div class="modal-overlay" id="promptsModal">
+        <div class="modal-card" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>Prompt Library & Inspiration</h3>
+                <button class="btn-icon btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px; max-height:400px; overflow-y:auto;">
+                <div class="prompt-card-chip prompt-chip-trigger btn-close-modal" data-prompt="Build a modern dark-mode Spotify web player clone with sidebar and music player controls">
+                    <strong>Clone App</strong>
+                    <span>Build a complete Spotify Clone with dark glass aesthetic and music controls</span>
+                </div>
+                <div class="prompt-card-chip prompt-chip-trigger btn-close-modal" data-prompt="Build an Airbnb clone landing page with search bar for destinations, date pickers, and featured property cards">
+                    <strong>Clone App</strong>
+                    <span>Build an Airbnb clone with search filters and property showcase</span>
+                </div>
+                <div class="prompt-card-chip prompt-chip-trigger btn-close-modal" data-prompt="What is the weather in Singapore and Tokyo right now? Compare both temperatures.">
+                    <strong>Weather</strong>
+                    <span>Compare temperatures and weather between Singapore and Tokyo</span>
+                </div>
+                <div class="prompt-card-chip prompt-chip-trigger btn-close-modal" data-prompt="Convert 2,500 USD into Japanese Yen (JPY), British Pounds (GBP), and Euros (EUR)">
+                    <strong>Currency</strong>
+                    <span>Multi-currency conversion of 2,500 USD into JPY, GBP, and EUR</span>
+                </div>
+            </div>
+            <button class="btn-secondary btn-close-modal" style="margin-top:8px; justify-content:center;">Close</button>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+</div>
+
+<!-- Scripts -->
+<script th:src="@{/js/app.js}" src="/js/app.js"></script>
+
+</body>
+</html>

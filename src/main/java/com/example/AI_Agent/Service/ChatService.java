@@ -58,4 +58,12 @@ public class ChatService {
 
 		return response;
 	}
+
+	public void clearHistory() {
+		this.history.clear();
+	}
+
+	public int getMessageCount() {
+		return this.history.size();
+	}
 }
