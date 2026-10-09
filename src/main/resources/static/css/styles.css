@@ -127,23 +127,28 @@ button, input, textarea, select {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
+  position: relative;
 }
 
 /* Header */
 .app-header {
-  height: 70px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  height: 68px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-light);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 28px;
-  z-index: 100;
+  z-index: 120;
   position: relative;
   box-shadow: var(--shadow-xs);
+  flex-shrink: 0;
 }
 
 .brand {
@@ -1923,50 +1928,643 @@ button, input, textarea, select {
 }
 
 /* ==========================================================================
-   Responsive Breakpoints
+   Responsive Breakpoints & Mobile Design System
    ========================================================================== */
+
+/* Utility Visibility Classes */
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
+  }
+  .desktop-only {
+    display: flex !important;
+  }
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+  .chat-sidebar-backdrop {
+    display: none !important;
+  }
+  .builder-mobile-toggle-bar {
+    display: none !important;
+  }
+}
+
+/* Tablet and Smaller Screen Rules (<= 1024px) */
 @media (max-width: 1024px) {
-  .chat-sidebar {
-    display: none;
-  }
-  .builder-module {
-    flex-direction: column;
-  }
-  .builder-sidebar {
-    width: 100%;
-    height: auto;
-    max-height: 40vh;
-  }
   .popular-rates-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+/* ==========================================================================
+   Mobile Devices (<= 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
+  .desktop-only, .desktop-nav-tabs {
+    display: none !important;
+  }
+  .mobile-only {
+    display: flex !important;
+  }
+
+  /* App Header on Mobile */
   .app-header {
-    padding: 0 16px;
+    height: 58px;
+    padding: 0 14px;
+    gap: 8px;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 120;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 17px;
+    border-radius: 10px;
+  }
+
+  .brand-text h1 {
+    font-size: 16px;
+    letter-spacing: -0.3px;
+    gap: 6px;
+  }
+
+  .brand-badge {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .brand-tagline {
+    display: none !important;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .status-pill {
+    padding: 4px 8px;
+    font-size: 11px;
+    gap: 5px;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .btn-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+  /* ========================================================================
+     Mobile Bottom Navigation Bar (Docked to Bottom)
+     ======================================================================== */
+  .mobile-bottom-nav {
+    display: flex !important;
+    position: relative;
+    z-index: 150;
     height: 60px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-light);
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 4px calc(env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -3px 16px rgba(15, 23, 42, 0.05);
+    flex-shrink: 0;
   }
-  .brand-text p {
-    display: none;
+
+  .mobile-nav-btn {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border-radius: var(--radius-sm);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    padding: 4px 2px;
   }
-  .nav-tabs-wrapper {
+
+  .mobile-nav-icon-wrap {
+    width: 32px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+  }
+
+  .mobile-nav-icon-wrap i {
+    font-size: 16.5px;
+    transition: transform var(--transition-fast);
+  }
+
+  .mobile-nav-btn span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    transition: color var(--transition-fast);
+  }
+
+  .mobile-nav-btn.active {
+    color: var(--primary);
+  }
+
+  .mobile-nav-btn.active .mobile-nav-icon-wrap {
+    background: var(--primary-light);
+    color: var(--primary);
+    transform: translateY(-1px);
+  }
+
+  .mobile-nav-btn.active span {
+    color: var(--primary);
+    font-weight: 800;
+  }
+
+  /* ========================================================================
+     Tab 1: Chat Module on Mobile
+     ======================================================================== */
+  .chat-module {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Chat Off-Canvas Drawer on Mobile */
+  .chat-sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 280;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-normal);
+  }
+
+  .chat-sidebar-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .chat-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 310px;
+    max-width: 86vw;
+    height: 100%;
+    height: 100dvh;
+    background: #ffffff;
+    z-index: 290;
+    transform: translateX(-100%);
+    transition: transform var(--transition-normal);
+    box-shadow: var(--shadow-xl);
+    padding: 16px 14px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .chat-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .chat-sidebar-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-light);
+    font-weight: 700;
+    font-size: 13.5px;
+    color: var(--text-primary);
+  }
+
+  .sidebar-title-mob {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Mobile Tool Pills Bar at Top of Chat */
+  .mobile-tool-pills-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
     overflow-x: auto;
-    max-width: 260px;
+    -webkit-overflow-scrolling: touch;
+    border-bottom: 1px solid var(--border-light);
+    background: rgba(255, 255, 255, 0.9);
+    flex-shrink: 0;
+    scrollbar-width: none;
   }
-  .nav-tab-btn span {
+  .mobile-tool-pills-bar::-webkit-scrollbar {
     display: none;
   }
+
+  .mobile-tool-pill {
+    padding: 5px 11px;
+    border-radius: var(--radius-full);
+    background: var(--bg-surface-secondary);
+    border: 1px solid var(--border-light);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .mobile-tool-pill:active {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+
   .chat-messages-container {
-    padding: 16px 16px;
+    padding: 14px 12px;
+    gap: 16px;
   }
+
+  .message-row {
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .message-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+
+  .message-bubble {
+    padding: 12px 14px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    border-radius: 16px;
+  }
+
+  .chat-welcome-hero {
+    padding: 20px 8px;
+    gap: 14px;
+  }
+
+  .hero-avatar-ring {
+    width: 58px;
+    height: 58px;
+    font-size: 24px;
+    border-radius: 18px;
+  }
+
+  .chat-welcome-hero h2 {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  .chat-welcome-hero p {
+    font-size: 13px;
+  }
+
+  .hero-feature-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .feature-box {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
   .chat-input-wrapper {
-    padding: 12px 16px;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    background: #ffffff;
+    border-top: 1px solid var(--border-light);
   }
+
+  .chat-input-box {
+    padding: 6px 10px 6px 14px;
+    border-radius: 18px;
+  }
+
+  .chat-textarea {
+    font-size: 14px;
+    min-height: 24px;
+  }
+
+  .btn-send-chat {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+  }
+
+  .chat-disclaimer {
+    font-size: 10.5px;
+    margin-top: 4px;
+  }
+
+  /* ========================================================================
+     Tab 2: Website Builder on Mobile
+     ======================================================================== */
+  .builder-module {
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+  }
+
+  .builder-mobile-toggle-bar {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-light);
+    flex-shrink: 0;
+  }
+
+  .builder-view-tab-btn {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    background: var(--bg-surface-secondary);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .builder-view-tab-btn.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: rgba(79, 70, 229, 0.3);
+  }
+
+  .builder-sidebar {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .builder-workspace {
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+
+  /* When mobile workspace mode is toggled active */
+  .builder-module.show-workspace .builder-sidebar {
+    display: none;
+  }
+  .builder-module.show-workspace .builder-workspace {
+    display: flex;
+  }
+
+  .workspace-top-bar {
+    height: auto;
+    padding: 8px 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .workspace-canvas {
+    padding: 10px;
+  }
+
+  /* ========================================================================
+     Tab 3: Weather Module on Mobile
+     ======================================================================== */
+  .weather-module {
+    padding: 16px 12px 24px;
+  }
+
+  .module-header h2 {
+    font-size: 22px;
+  }
+
+  .module-header p {
+    font-size: 13px;
+  }
+
+  .weather-search-bar {
+    padding: 6px 8px 6px 14px;
+  }
+
+  .weather-input {
+    font-size: 13.5px;
+  }
+
+  .weather-quick-cities {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding: 4px 0;
+    gap: 6px;
+    scrollbar-width: none;
+  }
+  .weather-quick-cities::-webkit-scrollbar {
+    display: none;
+  }
+
+  .city-chip {
+    padding: 5px 12px;
+    font-size: 11.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .weather-hero-card {
+    padding: 18px 14px;
+    gap: 16px;
+  }
+
+  .weather-card-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .weather-location h3 {
+    font-size: 19px;
+  }
+
+  .temp-huge {
+    font-size: 46px;
+  }
+
+  .weather-condition-badge h4 {
+    font-size: 16px;
+  }
+
   .weather-metrics-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
+
+  .metric-card {
+    padding: 12px;
+    gap: 4px;
+  }
+
+  .metric-card-val {
+    font-size: 15px;
+  }
+
+  /* ========================================================================
+     Tab 4: Currency Exchange on Mobile
+     ======================================================================== */
+  .currency-module {
+    padding: 16px 12px 24px;
+  }
+
+  .currency-converter-card {
+    padding: 18px 14px;
+    gap: 16px;
+  }
+
+  .converter-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .btn-swap-currency {
+    margin: 0 auto;
+    align-self: center;
+    width: 38px;
+    height: 38px;
+    margin-top: 0;
+  }
+
+  .currency-input {
+    font-size: 16px;
+  }
+
+  .rate-result-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .rate-result-text h4 {
+    font-size: 18px;
+  }
+
   .popular-rates-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* ========================================================================
+     Tab 5: Calculator on Mobile
+     ======================================================================== */
+  .calc-module {
+    padding: 16px 12px 24px;
+  }
+
+  .calc-card {
+    padding: 16px 12px;
+    gap: 14px;
+  }
+
+  .calc-display {
+    padding: 12px 14px;
+    min-height: 70px;
+  }
+
+  .calc-current {
+    font-size: 26px;
+  }
+
+  .calc-grid {
+    gap: 8px;
+  }
+
+  .calc-key {
+    height: 50px;
+    font-size: 17px;
+    border-radius: 12px;
+  }
+
+  /* Modals on Mobile */
+  .modal-card {
+    width: 92%;
+    max-width: 92vw;
+    max-height: 85vh;
+    padding: 20px 16px;
+    overflow-y: auto;
+  }
+
+  /* Toasts on Mobile */
+  .toast-container {
+    bottom: 74px;
+    right: 14px;
+    left: 14px;
+    align-items: center;
+  }
+
+  .toast {
+    width: 100%;
+    max-width: 360px;
+    font-size: 12px;
+    padding: 10px 14px;
   }
 }
+
+/* Very Small Phones (<= 380px) */
+@media (max-width: 380px) {
+  .brand-text h1 {
+    font-size: 14.5px;
+  }
+  .status-text {
+    display: none !important;
+  }
+  .status-pill {
+    padding: 5px;
+    border-radius: 50%;
+  }
+  .mobile-nav-btn span {
+    font-size: 9px;
+  }
+}
+

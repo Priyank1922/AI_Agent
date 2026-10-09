@@ -2,7 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title th:text="${appTitle}">Nexus AI • Autonomous Multi-Tool Agent</title>
     
     <!-- Meta SEO & Description -->
@@ -25,7 +28,7 @@
 <div class="app-container">
 
     <!-- ====================================================================
-         TOP HEADER BAR
+         TOP HEADER BAR (Responsive: Desktop & Mobile)
          ==================================================================== -->
     <header class="app-header">
         <div class="brand" onclick="NexusApp.switchTab('chat')">
@@ -33,13 +36,13 @@
                 <i class="fa-solid fa-atom"></i>
             </div>
             <div class="brand-text">
-                <h1>Nexus AI <span class="brand-badge">Agent 2.0</span></h1>
-                <p>Autonomous LLM & Multi-Tool Studio</p>
+                <h1>Nexus AI <span class="brand-badge">2.0</span></h1>
+                <p class="brand-tagline">Autonomous LLM & Multi-Tool Studio</p>
             </div>
         </div>
 
-        <!-- Navigation Tabs -->
-        <nav class="nav-tabs-wrapper" aria-label="Main Navigation">
+        <!-- Navigation Tabs (Desktop Header) -->
+        <nav class="nav-tabs-wrapper desktop-nav-tabs" aria-label="Main Navigation">
             <button class="nav-tab-btn active" data-tab="chat" id="tabBtnChat">
                 <i class="fa-regular fa-comments"></i>
                 <span>Omni Chat</span>
@@ -66,13 +69,16 @@
         <div class="header-actions">
             <div class="status-pill" title="Connected to AI LLM Backend">
                 <span class="status-dot"></span>
-                <span>Active Agent</span>
+                <span class="status-text">Active Agent</span>
             </div>
             <button class="btn-icon" id="btnOpenPromptsModal" title="Starter Prompts & Examples">
                 <i class="fa-regular fa-lightbulb"></i>
             </button>
             <button class="btn-icon" id="btnOpenStatusModal" title="Agent Architecture & Status">
                 <i class="fa-solid fa-sliders"></i>
+            </button>
+            <button class="btn-icon mobile-only" id="btnToggleChatDrawer" title="AI Tools & History Drawer">
+                <i class="fa-solid fa-bars-staggered"></i>
             </button>
         </div>
     </header>
@@ -88,8 +94,16 @@
         <section class="tab-pane active" id="tab-chat">
             <div class="chat-module">
                 
+                <!-- Chat Left Sidebar Mobile Backdrop Overlay -->
+                <div class="chat-sidebar-backdrop" id="chatSidebarBackdrop"></div>
+
                 <!-- Chat Left Sidebar -->
-                <aside class="chat-sidebar">
+                <aside class="chat-sidebar" id="chatSidebar">
+                    <div class="chat-sidebar-mobile-header mobile-only">
+                        <div class="sidebar-title-mob"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--primary);"></i> AI Tools & History</div>
+                        <button class="btn-icon" id="btnCloseChatDrawer"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+
                     <div class="chat-sidebar-header">
                         <button class="btn-new-chat" id="btnNewChat">
                             <i class="fa-solid fa-plus"></i>
@@ -152,6 +166,15 @@
 
                 <!-- Chat Main Area -->
                 <div class="chat-main-area">
+                    
+                    <!-- Mobile Quick Tool Chips Bar (Mobile Only) -->
+                    <div class="mobile-tool-pills-bar mobile-only">
+                        <button class="mobile-tool-pill prompt-chip-trigger" data-prompt="What is the weather in Tokyo right now?">🌦️ Weather</button>
+                        <button class="mobile-tool-pill prompt-chip-trigger" data-prompt="Convert 1000 USD to EUR and INR with current rate">💱 Currency FX</button>
+                        <button class="mobile-tool-pill prompt-chip-trigger" data-prompt="Calculate compound interest on $10,000 at 8% annual for 5 years">🧮 Math Engine</button>
+                        <button class="mobile-tool-pill" onclick="NexusApp.switchTab('builder')">🌐 App Cloner</button>
+                    </div>
+
                     <div class="chat-messages-container" id="chatMessages">
                         
                         <!-- Welcome Hero -->
@@ -207,7 +230,8 @@
                             </div>
                         </form>
                         <div class="chat-disclaimer">
-                            Nexus AI Agent combines Spring AI, OpenRouter LLM, and autonomous tool calling.
+                            Nexus AI Agent combines Spring AI, OpenRouter LLMs, and autonomous tool calling. Built by Priyank Mehta.
+                            
                         </div>
                     </div>
                 </div>
@@ -219,10 +243,22 @@
              TAB 2: AI WEBSITE BUILDER & APP CLONER STUDIO
              ================================================================ -->
         <section class="tab-pane" id="tab-builder">
-            <div class="builder-module">
+            <div class="builder-module" id="builderModule">
                 
+                <!-- Mobile Builder View Switcher (Mobile Only) -->
+                <div class="builder-mobile-toggle-bar mobile-only">
+                    <button class="builder-view-tab-btn active" id="btnBuilderViewConfig" data-builder-view="config">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Generator Studio</span>
+                    </button>
+                    <button class="builder-view-tab-btn" id="btnBuilderViewWorkspace" data-builder-view="workspace">
+                        <i class="fa-solid fa-display"></i>
+                        <span>Live Preview & Code</span>
+                    </button>
+                </div>
+
                 <!-- Builder Config Sidebar -->
-                <aside class="builder-sidebar">
+                <aside class="builder-sidebar" id="builderSidebar">
                     <div class="builder-header-badge">
                         <i class="fa-solid fa-wand-magic-sparkles"></i> Autonomous Cloner
                     </div>
@@ -289,7 +325,7 @@
                 </aside>
 
                 <!-- Builder Main Canvas / Inspector Area -->
-                <div class="builder-workspace">
+                <div class="builder-workspace" id="builderWorkspace">
                     
                     <!-- Top Workspace Bar -->
                     <div class="workspace-top-bar">
@@ -695,6 +731,32 @@
 
     <!-- Toast Notifications Container -->
     <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ====================================================================
+         MOBILE BOTTOM NAVIGATION BAR (Visible on Mobile / Tablets)
+         ==================================================================== -->
+    <nav class="mobile-bottom-nav mobile-only" aria-label="Mobile Navigation">
+        <button class="mobile-nav-btn active" data-tab="chat" id="mobTabBtnChat">
+            <div class="mobile-nav-icon-wrap"><i class="fa-regular fa-comments"></i></div>
+            <span>Chat</span>
+        </button>
+        <button class="mobile-nav-btn" data-tab="builder" id="mobTabBtnBuilder">
+            <div class="mobile-nav-icon-wrap"><i class="fa-solid fa-code-fork"></i></div>
+            <span>Cloner</span>
+        </button>
+        <button class="mobile-nav-btn" data-tab="weather" id="mobTabBtnWeather">
+            <div class="mobile-nav-icon-wrap"><i class="fa-solid fa-cloud-sun"></i></div>
+            <span>Weather</span>
+        </button>
+        <button class="mobile-nav-btn" data-tab="currency" id="mobTabBtnCurrency">
+            <div class="mobile-nav-icon-wrap"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+            <span>FX Rates</span>
+        </button>
+        <button class="mobile-nav-btn" data-tab="calc" id="mobTabBtnCalc">
+            <div class="mobile-nav-icon-wrap"><i class="fa-solid fa-calculator"></i></div>
+            <span>Math</span>
+        </button>
+    </nav>
 
 </div>
 

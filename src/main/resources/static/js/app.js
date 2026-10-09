@@ -41,7 +41,7 @@ const NexusApp = {
        Navigation & Tabs
        ========================================================================== */
     initTabs() {
-        const tabBtns = document.querySelectorAll('.nav-tab-btn');
+        const tabBtns = document.querySelectorAll('.nav-tab-btn, .mobile-nav-btn');
         tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const targetTab = btn.getAttribute('data-tab');
@@ -59,6 +59,7 @@ const NexusApp = {
         if (!document.getElementById(`tab-${tabId}`)) return;
         this.currentTab = tabId;
 
+        // Update Desktop Header Tab Buttons
         document.querySelectorAll('.nav-tab-btn').forEach(btn => {
             if (btn.getAttribute('data-tab') === tabId) {
                 btn.classList.add('active');
@@ -67,6 +68,16 @@ const NexusApp = {
             }
         });
 
+        // Update Mobile Bottom Nav Buttons
+        document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+            if (btn.getAttribute('data-tab') === tabId) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // Show Active Section
         document.querySelectorAll('.tab-pane').forEach(pane => {
             if (pane.id === `tab-${tabId}`) {
                 pane.classList.add('active');
@@ -74,6 +85,9 @@ const NexusApp = {
                 pane.classList.remove('active');
             }
         });
+
+        // Close mobile chat drawer if switching tabs
+        this.closeChatDrawer();
 
         // Update URL state without page reload
         const url = new URL(window.location);
@@ -94,6 +108,21 @@ const NexusApp = {
         const btnSend = document.getElementById('btnSendChat');
         const btnNewChat = document.getElementById('btnNewChat');
         const btnClearSession = document.getElementById('btnClearSession');
+
+        // Mobile Chat Drawer Toggles
+        const btnToggleDrawer = document.getElementById('btnToggleChatDrawer');
+        const btnCloseDrawer = document.getElementById('btnCloseChatDrawer');
+        const drawerBackdrop = document.getElementById('chatSidebarBackdrop');
+
+        if (btnToggleDrawer) {
+            btnToggleDrawer.addEventListener('click', () => this.toggleChatDrawer());
+        }
+        if (btnCloseDrawer) {
+            btnCloseDrawer.addEventListener('click', () => this.closeChatDrawer());
+        }
+        if (drawerBackdrop) {
+            drawerBackdrop.addEventListener('click', () => this.closeChatDrawer());
+        }
 
         // Auto-expand textarea
         chatInput.addEventListener('input', () => {
@@ -120,10 +149,16 @@ const NexusApp = {
         });
 
         if (btnNewChat) {
-            btnNewChat.addEventListener('click', () => this.clearChatSession());
+            btnNewChat.addEventListener('click', () => {
+                this.clearChatSession();
+                this.closeChatDrawer();
+            });
         }
         if (btnClearSession) {
-            btnClearSession.addEventListener('click', () => this.clearChatSession());
+            btnClearSession.addEventListener('click', () => {
+                this.clearChatSession();
+                this.closeChatDrawer();
+            });
         }
 
         // Quick prompt chips
@@ -132,10 +167,32 @@ const NexusApp = {
                 const prompt = chip.getAttribute('data-prompt');
                 if (prompt) {
                     this.switchTab('chat');
+                    this.closeChatDrawer();
                     this.sendChatMessage(prompt);
                 }
             });
         });
+    },
+
+    toggleChatDrawer() {
+        const sidebar = document.getElementById('chatSidebar');
+        const backdrop = document.getElementById('chatSidebarBackdrop');
+        if (sidebar && backdrop) {
+            const isOpen = sidebar.classList.contains('open');
+            if (isOpen) {
+                this.closeChatDrawer();
+            } else {
+                sidebar.classList.add('open');
+                backdrop.classList.add('active');
+            }
+        }
+    },
+
+    closeChatDrawer() {
+        const sidebar = document.getElementById('chatSidebar');
+        const backdrop = document.getElementById('chatSidebarBackdrop');
+        if (sidebar) sidebar.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('active');
     },
 
     async sendChatMessage(message) {
@@ -313,6 +370,16 @@ const NexusApp = {
         const builderForm = document.getElementById('builderForm');
         const promptInput = document.getElementById('builderPrompt');
         const btnGenerate = document.getElementById('btnGenerateSite');
+
+        // Mobile View Switcher (Studio Config vs Live Preview & Code)
+        const btnViewConfig = document.getElementById('btnBuilderViewConfig');
+        const btnViewWorkspace = document.getElementById('btnBuilderViewWorkspace');
+        if (btnViewConfig) {
+            btnViewConfig.addEventListener('click', () => this.setMobileBuilderView('config'));
+        }
+        if (btnViewWorkspace) {
+            btnViewWorkspace.addEventListener('click', () => this.setMobileBuilderView('workspace'));
+        }
 
         // Preset Chips
         document.querySelectorAll('.preset-chip').forEach(chip => {
@@ -519,6 +586,11 @@ const NexusApp = {
         // Highlight active saved card
         document.querySelectorAll('.saved-project-card').forEach(c => c.classList.remove('active'));
 
+        // If on mobile, switch to workspace view to reveal the live preview
+        if (window.innerWidth <= 768) {
+            this.setMobileBuilderView('workspace');
+        }
+
         // Fetch files content for code inspector
         try {
             const res = await fetch(`/website/project/${projectName}/files`);
@@ -559,6 +631,24 @@ const NexusApp = {
         if (!frame) return;
         frame.classList.remove('desktop', 'tablet', 'mobile');
         frame.classList.add(device);
+    },
+
+    setMobileBuilderView(view) {
+        const module = document.getElementById('builderModule');
+        const btnConfig = document.getElementById('btnBuilderViewConfig');
+        const btnWorkspace = document.getElementById('btnBuilderViewWorkspace');
+
+        if (!module) return;
+
+        if (view === 'workspace') {
+            module.classList.add('show-workspace');
+            if (btnWorkspace) btnWorkspace.classList.add('active');
+            if (btnConfig) btnConfig.classList.remove('active');
+        } else {
+            module.classList.remove('show-workspace');
+            if (btnConfig) btnConfig.classList.add('active');
+            if (btnWorkspace) btnWorkspace.classList.remove('active');
+        }
     },
 
     setBuilderMode(mode) {
