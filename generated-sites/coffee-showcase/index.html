@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BrewLab • Artisanal Specialty Roasters</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="brand">☕ BrewLab Artisans</div>
+
+        <div class="cart-btn" onclick="toggleCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
+
+    </header>
+
+    <section class="hero">
+
+        <h1>Handcrafted Coffee, Roasted with Passion</h1>
+
+        <p>Ethically sourced single-origin beans, precision brewed to perfection.</p>
+
+    </section>
+
+    <main class="menu-grid">
+
+        <div class="item-card">
+
+            <h3>Ethiopian Yirgacheffe Pour-Over</h3>
+
+            <p>Floral notes of bergamot, jasmine, and citrus lemon zest.</p>
+
+            <div class="item-bottom">
+
+                <span class="price">$5.50</span>
+
+                <button class="btn-add" onclick="addToCart('Ethiopian Pour-Over', 5.50)">Add to Order</button>
+
+            </div>
+
+        </div>
+
+        <div class="item-card">
+
+            <h3>Caramel Macchiato Nitro Brew</h3>
+
+            <p>Cold brewed for 18 hours with velvety organic oat foam & vanilla.</p>
+
+            <div class="item-bottom">
+
+                <span class="price">$6.25</span>
+
+                <button class="btn-add" onclick="addToCart('Nitro Caramel', 6.25)">Add to Order</button>
+
+            </div>
+
+        </div>
+
+        <div class="item-card">
+
+            <h3>Artisanal Almond Croissant</h3>
+
+            <p>Freshly baked daily with French butter and almond frangipane.</p>
+
+            <div class="item-bottom">
+
+                <span class="price">$4.75</span>
+
+                <button class="btn-add" onclick="addToCart('Almond Croissant', 4.75)">Add to Order</button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+

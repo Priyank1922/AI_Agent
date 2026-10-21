@@ -78,19 +78,38 @@ public class WebsiteBuilderController {
             String result = websiteService.generate(message);
             response.put("success", true);
             response.put("response", result);
-            
+
             // Look for recently created project folders
             List<Map<String, Object>> projects = getProjectsList();
             response.put("projects", projects);
-            if (!projects.isEmpty()) {
+
+            String latestSlug = websiteService.getLastGeneratedSlug();
+            if (latestSlug != null && !latestSlug.isEmpty()) {
+                response.put("latestProject", latestSlug);
+            } else if (!projects.isEmpty()) {
                 response.put("latestProject", projects.get(0).get("name"));
             }
+
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("success", false);
             response.put("error", e.getMessage());
             return ResponseEntity.internalServerError().body(response);
         }
+    }
+
+    @PostMapping("/prepare-samples")
+    public ResponseEntity<Map<String, Object>> prepareSamples() {
+        websiteService.prepareSampleProjects(true);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "All sample clones prepared successfully in workspace.");
+        List<Map<String, Object>> projects = getProjectsList();
+        response.put("projects", projects);
+        if (!projects.isEmpty()) {
+            response.put("latestProject", projects.get(0).get("name"));
+        }
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/projects")
@@ -172,20 +191,29 @@ public class WebsiteBuilderController {
                 String dirName = dir.getFileName().toString();
                 info.put("name", dirName);
                 info.put("previewUrl", "/sites/" + dirName + "/index.html");
-                
+
                 try {
                     long fileCount;
+                    long latestModifiedTime = Files.getLastModifiedTime(dir).toMillis();
                     try (Stream<Path> fileStream = Files.walk(dir)) {
-                        fileCount = fileStream.filter(Files::isRegularFile).count();
+                        List<Path> regularFiles = fileStream.filter(Files::isRegularFile).collect(Collectors.toList());
+                        fileCount = regularFiles.size();
+                        for (Path f : regularFiles) {
+                            try {
+                                latestModifiedTime = Math.max(latestModifiedTime, Files.getLastModifiedTime(f).toMillis());
+                            } catch (Exception ignored) {
+                            }
+                        }
                     }
                     info.put("fileCount", fileCount);
                     info.put("hasIndex", Files.exists(dir.resolve("index.html")));
                     info.put("hasCss", Files.exists(dir.resolve("style.css")));
                     info.put("hasJs", Files.exists(dir.resolve("script.js")));
-                    info.put("lastModified", Files.getLastModifiedTime(dir).toMillis());
+                    info.put("lastModified", latestModifiedTime);
                 } catch (Exception e) {
                     info.put("fileCount", 0);
                     info.put("hasIndex", false);
+                    info.put("lastModified", 0L);
                 }
                 projects.add(info);
             });

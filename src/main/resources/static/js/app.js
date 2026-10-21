@@ -392,6 +392,33 @@ const NexusApp = {
             });
         });
 
+        // Reset / Prepare Samples Button
+        const btnPrepare = document.getElementById('btnPrepareSamples');
+        if (btnPrepare) {
+            btnPrepare.addEventListener('click', async () => {
+                btnPrepare.disabled = true;
+                btnPrepare.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Preparing...';
+                try {
+                    const res = await fetch('/website/prepare-samples', { method: 'POST' });
+                    const data = await res.json();
+                    if (data.success) {
+                        this.showToast('🎉 All sample clones prepared and ready!');
+                        await this.loadSavedProjects();
+                        if (data.latestProject) {
+                            this.loadProjectPreview(data.latestProject);
+                        }
+                    } else {
+                        this.showToast('Failed to prepare samples: ' + (data.error || 'Unknown error'));
+                    }
+                } catch (err) {
+                    this.showToast('Error preparing samples: ' + err.message);
+                } finally {
+                    btnPrepare.disabled = false;
+                    btnPrepare.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Reset Samples';
+                }
+            });
+        }
+
         // Form Submit
         builderForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -547,6 +574,7 @@ const NexusApp = {
             projects.forEach((proj, idx) => {
                 const card = document.createElement('div');
                 card.className = `saved-project-card ${this.currentProject === proj.name ? 'active' : ''}`;
+                card.setAttribute('data-project', proj.name);
                 card.innerHTML = `
                     <div class="project-info">
                         <h5>${proj.name}</h5>
@@ -579,12 +607,15 @@ const NexusApp = {
         const iframe = document.getElementById('previewIframe');
         const urlPill = document.getElementById('browserUrlPill');
 
-        const previewUrl = `/sites/${projectName}/index.html`;
-        if (iframe) iframe.src = previewUrl;
-        if (urlPill) urlPill.textContent = `http://localhost:8080${previewUrl}`;
+        const previewPath = `/sites/${projectName}/index.html`;
+        if (iframe) iframe.src = `${previewPath}?t=${Date.now()}`;
+        if (urlPill) urlPill.textContent = `http://localhost:8080${previewPath}`;
 
         // Highlight active saved card
-        document.querySelectorAll('.saved-project-card').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.saved-project-card').forEach(c => {
+            const isMatch = c.getAttribute('data-project') === projectName;
+            c.classList.toggle('active', isMatch);
+        });
 
         // If on mobile, switch to workspace view to reveal the live preview
         if (window.innerWidth <= 768) {

@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Spotify • Web Player Clone</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="spotify-app">
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar">
+
+            <div class="brand">
+
+                <i class="fa-brands fa-spotify"></i>
+
+                <span>Spotify</span>
+
+            </div>
+
+            <nav class="nav-links">
+
+                <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> Home</a>
+
+                <a href="#" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+
+                <a href="#" class="nav-item"><i class="fa-solid fa-book"></i> Your Library</a>
+
+            </nav>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="playlist-header">PLAYLISTS</div>
+
+            <div class="playlist-list">
+
+                <div class="playlist-item active" data-song="Starboy • The Weeknd" data-artist="The Weeknd" data-cover="🌟">Today's Top Hits</div>
+
+                <div class="playlist-item" data-song="Blinding Lights • Synthwave" data-artist="The Weeknd" data-cover="⚡">Discover Weekly</div>
+
+                <div class="playlist-item" data-song="Lo-Fi Study Beats • Chill" data-artist="ChilledCow" data-cover="☕">Deep Focus Lo-Fi</div>
+
+                <div class="playlist-item" data-song="Midnight City • M83" data-artist="M83" data-cover="🌃">Late Night Drive</div>
+
+                <div class="playlist-item" data-song="Cyberpunk 2077 Synth" data-artist="Night City DJ" data-cover="🤖">Electronic Vibes</div>
+
+            </div>
+
+        </aside>
+
+        <!-- Main Content Area -->
+
+        <main class="main-content">
+
+            <header class="top-nav">
+
+                <div class="nav-arrows">
+
+                    <button class="arrow-btn"><i class="fa-solid fa-chevron-left"></i></button>
+
+                    <button class="arrow-btn"><i class="fa-solid fa-chevron-right"></i></button>
+
+                </div>
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input type="text" placeholder="What do you want to play?" id="searchBar">
+
+                </div>
+
+                <div class="user-profile">
+
+                    <div class="avatar"><i class="fa-solid fa-user"></i></div>
+
+                    <span>Priyank</span>
+
+                </div>
+
+            </header>
+
+            <section class="content-body">
+
+                <h2 class="section-greeting" id="greetingText">Good Evening</h2>
+
+                <!-- Quick Access Grid -->
+
+                <div class="quick-grid">
+
+                    <div class="quick-card" data-title="Today's Top Hits" data-artist="Global Top 50" data-cover="🔥">
+
+                        <div class="quick-cover" style="background: linear-gradient(135deg, #e11d48, #4f46e5);">🔥</div>
+
+                        <span>Today's Top Hits</span>
+
+                        <button class="play-bubble"><i class="fa-solid fa-play"></i></button>
+
+                    </div>
+
+                    <div class="quick-card" data-title="Deep Focus Lo-Fi" data-artist="Lofi Girl" data-cover="☕">
+
+                        <div class="quick-cover" style="background: linear-gradient(135deg, #059669, #0284c7);">☕</div>
+
+                        <span>Deep Focus Lo-Fi</span>
+
+                        <button class="play-bubble"><i class="fa-solid fa-play"></i></button>
+
+                    </div>
+
+                    <div class="quick-card" data-title="Synthwave Nights" data-artist="Kavinsky" data-cover="🌃">
+
+                        <div class="quick-cover" style="background: linear-gradient(135deg, #7c3aed, #db2777);">🌃</div>
+
+                        <span>Synthwave Nights</span>
+
+                        <button class="play-bubble"><i class="fa-solid fa-play"></i></button>
+
+                    </div>
+
+                    <div class="quick-card" data-title="Chill Mix 2026" data-artist="Spotify Mix" data-cover="🎧">
+
+                        <div class="quick-cover" style="background: linear-gradient(135deg, #d97706, #dc2626);">🎧</div>
+
+                        <span>Chill Mix 2026</span>
+
+                        <button class="play-bubble"><i class="fa-solid fa-play"></i></button>
+
+                    </div>
+
+                </div>
+
+                <!-- Made for You Carousel -->
+
+                <div class="section-header">
+
+                    <h3>Made For You</h3>
+
+                    <a href="#">Show all</a>
+
+                </div>
+
+                <div class="cards-carousel">
+
+                    <div class="music-card" data-title="Blinding Lights" data-artist="The Weeknd" data-cover="✨">
+
+                        <div class="card-img-wrap" style="background: linear-gradient(135deg, #4f46e5, #ec4899);">
+
+                            <span class="card-icon">✨</span>
+
+                            <button class="card-play-btn"><i class="fa-solid fa-play"></i></button>
+
+                        </div>
+
+                        <h4>Blinding Lights</h4>
+
+                        <p>The Weeknd • After Hours</p>
+
+                    </div>
+
+                    <div class="music-card" data-title="Levitating" data-artist="Dua Lipa" data-cover="🚀">
+
+                        <div class="card-img-wrap" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);">
+
+                            <span class="card-icon">🚀</span>
+
+                            <button class="card-play-btn"><i class="fa-solid fa-play"></i></button>
+
+                        </div>
+
+                        <h4>Levitating</h4>
+
+                        <p>Dua Lipa • Future Nostalgia</p>
+
+                    </div>
+
+                    <div class="music-card" data-title="Starboy" data-artist="The Weeknd, Daft Punk" data-cover="⚡">
+
+                        <div class="card-img-wrap" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">
+
+                            <span class="card-icon">⚡</span>
+
+                            <button class="card-play-btn"><i class="fa-solid fa-play"></i></button>
+
+                        </div>
+
+                        <h4>Starboy</h4>
+
+                        <p>The Weeknd, Daft Punk</p>
+
+                    </div>
+
+                    <div class="music-card" data-title="Nightcall" data-artist="Kavinsky" data-cover="🏎️">
+
+                        <div class="card-img-wrap" style="background: linear-gradient(135deg, #10b981, #06b6d4);">
+
+                            <span class="card-icon">🏎️</span>
+
+                            <button class="card-play-btn"><i class="fa-solid fa-play"></i></button>
+
+                        </div>
+
+                        <h4>Nightcall</h4>
+
+                        <p>Kavinsky • Drive Soundtrack</p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- Player Bar -->
+
+        <footer class="player-bar">
+
+            <div class="now-playing">
+
+                <div class="now-playing-cover" id="currentCover">🔥</div>
+
+                <div class="now-playing-info">
+
+                    <h5 id="currentTitle">Today's Top Hits</h5>
+
+                    <span id="currentArtist">Global Charts</span>
+
+                </div>
+
+                <button class="like-btn" id="likeBtn"><i class="fa-regular fa-heart"></i></button>
+
+            </div>
+
+            <div class="player-controls">
+
+                <div class="control-buttons">
+
+                    <button class="sub-btn" id="shuffleBtn" title="Shuffle"><i class="fa-solid fa-shuffle"></i></button>
+
+                    <button class="sub-btn" id="prevBtn" title="Previous"><i class="fa-solid fa-backward-step"></i></button>
+
+                    <button class="main-play-btn" id="mainPlayBtn" title="Play/Pause"><i class="fa-solid fa-play"></i></button>
+
+                    <button class="sub-btn" id="nextBtn" title="Next"><i class="fa-solid fa-forward-step"></i></button>
+
+                    <button class="sub-btn" id="repeatBtn" title="Repeat"><i class="fa-solid fa-repeat"></i></button>
+
+                </div>
+
+                <div class="progress-container">
+
+                    <span class="time-stamp" id="currentTime">0:00</span>
+
+                    <div class="progress-bar-wrap" id="progressBarWrap">
+
+                        <div class="progress-bar-fill" id="progressBarFill" style="width: 25%;"></div>
+
+                    </div>
+
+                    <span class="time-stamp" id="totalDuration">3:42</span>
+
+                </div>
+
+            </div>
+
+            <div class="extra-controls">
+
+                <button class="sub-btn"><i class="fa-solid fa-list"></i></button>
+
+                <button class="sub-btn"><i class="fa-solid fa-volume-high"></i></button>
+
+                <div class="volume-slider-wrap" id="volumeWrap">
+
+                    <div class="volume-bar-fill" id="volumeFill" style="width: 75%;"></div>
+
+                </div>
+
+            </div>
+
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+

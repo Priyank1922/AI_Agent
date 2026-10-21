@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Netflix • Watch TV Shows & Movies</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header class="netflix-header">
+
+        <div class="left-nav">
+
+            <span class="netflix-logo">NETFLIX</span>
+
+            <nav class="nav-links">
+
+                <a href="#" class="active">Home</a>
+
+                <a href="#">TV Shows</a>
+
+                <a href="#">Movies</a>
+
+                <a href="#">New & Popular</a>
+
+                <a href="#">My List</a>
+
+            </nav>
+
+        </div>
+
+        <div class="right-nav">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <i class="fa-regular fa-bell"></i>
+
+            <div class="user-badge">P</div>
+
+        </div>
+
+    </header>
+
+    <section class="billboard">
+
+        <div class="billboard-content">
+
+            <div class="series-badge"><span class="n-logo">N</span> SERIES</div>
+
+            <h1 class="movie-title">STRANGER THINGS 5</h1>
+
+            <p class="movie-desc">
+
+                When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.
+
+            </p>
+
+            <div class="billboard-btns">
+
+                <button class="btn-play" onclick="openTrailer('Stranger Things 5')"><i class="fa-solid fa-play"></i> Play</button>
+
+                <button class="btn-info" onclick="openTrailer('Stranger Things 5')"><i class="fa-solid fa-circle-info"></i> More Info</button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <main class="rows-container">
+
+        <section class="movie-row">
+
+            <h2>Trending Now</h2>
+
+            <div class="row-posters">
+
+                <div class="poster-card" style="background: linear-gradient(135deg, #e11d48, #4f46e5);" onclick="openTrailer('Cyberpunk: Edgerunners')">
+
+                    <span class="card-emoji">🤖</span>
+
+                    <div class="poster-info">
+
+                        <h4>Cyberpunk: Edgerunners</h4>
+
+                        <span>98% Match • Sci-Fi</span>
+
+                    </div>
+
+                </div>
+
+                <div class="poster-card" style="background: linear-gradient(135deg, #059669, #0284c7);" onclick="openTrailer('Squid Game: The Challenge')">
+
+                    <span class="card-emoji">🦑</span>
+
+                    <div class="poster-info">
+
+                        <h4>Squid Game Season 2</h4>
+
+                        <span>95% Match • Thriller</span>
+
+                    </div>
+
+                </div>
+
+                <div class="poster-card" style="background: linear-gradient(135deg, #7c3aed, #db2777);" onclick="openTrailer('Wednesday')">
+
+                    <span class="card-emoji">🖤</span>
+
+                    <div class="poster-info">
+
+                        <h4>Wednesday</h4>
+
+                        <span>97% Match • Mystery</span>
+
+                    </div>
+
+                </div>
+
+                <div class="poster-card" style="background: linear-gradient(135deg, #d97706, #dc2626);" onclick="openTrailer('Interstellar')">
+
+                    <span class="card-emoji">🚀</span>
+
+                    <div class="poster-info">
+
+                        <h4>Interstellar</h4>
+
+                        <span>99% Match • Space</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="movie-row">
+
+            <h2>Top 10 Movies Today</h2>
+
+            <div class="row-posters">
+
+                <div class="poster-card" style="background: linear-gradient(135deg, #2563eb, #1e40af);" onclick="openTrailer('Inception')">
+
+                    <span class="card-emoji">🌀</span>
+
+                    <div class="poster-info">
+
+                        <h4>Inception</h4>
+
+                        <span>#1 in Movies Today</span>
+
+                    </div>
+
+                </div>
+
+                <div class="poster-card" style="background: linear-gradient(135deg, #ca8a04, #991b1b);" onclick="openTrailer('Dune: Part Two')">
+
+                    <span class="card-emoji">🪐</span>
+
+                    <div class="poster-info">
+
+                        <h4>Dune: Part Two</h4>
+
+                        <span>#2 in Movies Today</span>
+
+                    </div>
+
+                </div>
+
+                <div class="poster-card" style="background: linear-gradient(135deg, #475569, #0f172a);" onclick="openTrailer('The Dark Knight')">
+
+                    <span class="card-emoji">🦇</span>
+
+                    <div class="poster-info">
+
+                        <h4>The Dark Knight</h4>
+
+                        <span>#3 in Movies Today</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div class="modal-overlay" id="trailerModal">
+
+        <div class="modal-box">
+
+            <h3 id="modalTitle">Movie Title</h3>
+
+            <p style="color:#aaa; margin: 12px 0 24px;">Now streaming in Ultra HD 4K with Dolby Atmos Spatial Audio.</p>
+
+            <div style="background:#000; height:180px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:40px;">🎬 Live Player Preview</div>
+
+            <button class="btn-play" style="margin-top:20px; width:100%; justify-content:center;" onclick="closeModal()">Close Preview</button>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+

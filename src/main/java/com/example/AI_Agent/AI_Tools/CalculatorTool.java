@@ -18,28 +18,34 @@ public class CalculatorTool {
 
 			@ToolParam(description = "Second number") double b) {
 
-		System.out.println("Calculator tool called");
+		System.out.println("Calculator tool called: " + operation + " with a=" + a + ", b=" + b);
 
-		if (operation.equals("add")) {
+		if (operation == null) {
+			throw new IllegalArgumentException("Operation cannot be null");
+		}
+
+		String op = operation.trim().toLowerCase();
+
+		if (op.equals("add") || op.equals("+") || op.equals("addition") || op.equals("plus") || op.equals("sum")) {
 			return a + b;
-		} else if (operation.equals("subtract")) {
+		} else if (op.equals("subtract") || op.equals("-") || op.equals("subtraction") || op.equals("minus")) {
 			return a - b;
-		} else if (operation.equals("divide")) {
+		} else if (op.equals("multiply") || op.equals("*") || op.equals("x") || op.equals("multiplication") || op.equals("times") || op.equals("product")) {
+			return a * b;
+		} else if (op.equals("divide") || op.equals("/") || op.equals("division")) {
 			if (b == 0) {
 				throw new IllegalArgumentException("Cannot divide by 0");
 			}
 			return a / b;
-		} else if (operation.equals("multiply")) {
-			return a * b;
-		} else if (operation.equals("mod")) {
+		} else if (op.equals("mod") || op.equals("%") || op.equals("modulo") || op.equals("remainder")) {
 			if (b == 0) {
 				throw new IllegalArgumentException("Cannot calculate mod by 0");
 			}
-		} else if (operation.equals("power")) {
+			return a % b;
+		} else if (op.equals("power") || op.equals("^") || op.equals("pow") || op.equals("exponent")) {
 			return Math.pow(a, b);
 		} else {
-			throw new IllegalArgumentException("Unsupported operation " + operation);
+			throw new IllegalArgumentException("Unsupported operation: " + operation);
 		}
-		return 0;
 	}
 }

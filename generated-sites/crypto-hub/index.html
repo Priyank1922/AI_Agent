@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CryptoPulse • Market Terminal</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="logo">⚡ CryptoPulse</div>
+
+        <div class="status"><span class="dot"></span> Live Market Feed</div>
+
+    </header>
+
+    <div class="ticker-bar">
+
+        <span>BTC/USD: $94,820 <strong style="color:#10b981;">+3.4%</strong></span> •
+
+        <span>ETH/USD: $3,640 <strong style="color:#10b981;">+5.1%</strong></span> •
+
+        <span>SOL/USD: $218 <strong style="color:#10b981;">+8.2%</strong></span>
+
+    </div>
+
+    <main class="main">
+
+        <div class="card">
+
+            <h3>Total Portfolio Value</h3>
+
+            <div class="val">$148,250.00 USD</div>
+
+            <p style="color:#10b981;">+$4,210.50 (24h PnL)</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Instant Swap</h3>
+
+            <input type="number" value="1" id="swapAmount" style="background:#1e293b; color:#fff; border:1px solid #334155; padding:8px; border-radius:6px; width:100%; margin:8px 0;">
+
+            <button onclick="calcSwap()" style="background:#10b981; color:#000; font-weight:700; border:none; padding:10px; width:100%; border-radius:6px; cursor:pointer;">Swap BTC for USDT</button>
+
+            <div id="swapRes" style="margin-top:8px; font-size:13px; color:#94a3b8;">1 BTC ≈ 94,820.00 USDT</div>
+
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+

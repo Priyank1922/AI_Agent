@@ -1,0 +1,31 @@
+
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Plus Jakarta Sans',sans-serif; }
+
+body { background:#1c130d; color:#fdfaf6; }
+
+.header { display:flex; justify-content:space-between; align-items:center; padding:20px 48px; border-bottom:1px solid #332014; }
+
+.brand { font-size:22px; font-weight:800; color:#d4a373; }
+
+.cart-btn { background:#d4a373; color:#1c130d; padding:8px 18px; border-radius:500px; font-weight:700; cursor:pointer; }
+
+.hero { text-align:center; padding:60px 24px; }
+
+.hero h1 { font-size:40px; color:#faedcd; margin-bottom:12px; }
+
+.hero p { color:#d4a373; }
+
+.menu-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px; padding:20px 48px 60px; max-width:1100px; margin:0 auto; }
+
+.item-card { background:#281b12; border:1px solid #3d291b; padding:24px; border-radius:14px; display:flex; flex-direction:column; justify-content:space-between; }
+
+.item-card h3 { font-size:18px; color:#faedcd; margin-bottom:8px; }
+
+.item-card p { font-size:13.5px; color:#d4a373; margin-bottom:20px; }
+
+.item-bottom { display:flex; justify-content:space-between; align-items:center; }
+
+.price { font-size:20px; font-weight:800; color:#faedcd; }
+
+.btn-add { background:#d4a373; color:#1c130d; border:none; padding:8px 16px; border-radius:6px; font-weight:700; cursor:pointer; }
+

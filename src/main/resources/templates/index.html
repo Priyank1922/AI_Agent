@@ -284,9 +284,17 @@
                                     <span class="preset-chip-icon">🎧</span>
                                     <span>Spotify Player Clone</span>
                                 </button>
+                                <button type="button" class="preset-chip" data-prompt="Create a complete Netflix clone with dark cinema theme, hero banner with trailer modal, movie categories, and trending row.">
+                                    <span class="preset-chip-icon">🎬</span>
+                                    <span>Netflix Cinema Clone</span>
+                                </button>
                                 <button type="button" class="preset-chip" data-prompt="Create a high-converting SaaS startup landing page with hero section, feature grid, pricing table, and testimonials.">
                                     <span class="preset-chip-icon">🚀</span>
                                     <span>SaaS Startup Landing</span>
+                                </button>
+                                <button type="button" class="preset-chip" data-prompt="Build a modern personal portfolio website for a Senior Full Stack & AI Engineer with interactive project showcases, skill tags, and contact modal.">
+                                    <span class="preset-chip-icon">💼</span>
+                                    <span>Developer Portfolio</span>
                                 </button>
                                 <button type="button" class="preset-chip" data-prompt="Build a luxury Artisan Coffee Shop website with hero banner, interactive menu cards, customer reviews, and contact footer.">
                                     <span class="preset-chip-icon">☕</span>
@@ -316,10 +324,15 @@
 
                     <!-- Saved Projects List -->
                     <div class="form-group" style="margin-top: 10px;">
-                        <label class="form-label">
-                            <span>Saved Projects in Workspace</span>
-                            <i class="fa-solid fa-folder-tree" style="color:var(--primary);"></i>
-                        </label>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                            <label class="form-label" style="margin:0;">
+                                <span>Projects in Workspace</span>
+                                <i class="fa-solid fa-folder-tree" style="color:var(--primary);"></i>
+                            </label>
+                            <button type="button" id="btnPrepareSamples" class="btn-secondary" style="padding:4px 10px; font-size:11px; border-radius:6px; cursor:pointer;" title="Prepare or reset all sample clones">
+                                <i class="fa-solid fa-arrows-rotate"></i> Reset Samples
+                            </button>
+                        </div>
                         <div class="saved-projects-list" id="savedProjectsList"></div>
                     </div>
                 </aside>
